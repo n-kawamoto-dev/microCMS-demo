@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getNewsList, getNewsBySlug } from "../../api/microcms";
+import { formatDate } from "../../utils/formatDate";
+
+export async function getStaticPaths() {
+  const { contents } = await getNewsList();
+
+  return contents.map((item) => ({
+    params: { slug: item.id },
+    props: { slug: item.id },
+  }));
+}
+
+const { slug } = Astro.props;
+const news = await getNewsBySlug(slug);
+---
+
+<BaseLayout title={news.title}>
+  <article>
+    <h1>{news.title}</h1>
+    <p>{news.publishedAt && formatDate(news.publishedAt)}</p>
+    {news.image && <img src={news.image.url} alt="" />}
+    <div set:html={news.content} />
+  </article>
+</BaseLayout>

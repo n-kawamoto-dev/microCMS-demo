@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Mac system files
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.*.local
+
+# VSCode settings
+.vscode/
+
+# OS generated files
+Thumbs.db
+Desktop.ini

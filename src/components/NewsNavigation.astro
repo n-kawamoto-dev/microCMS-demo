@@ -1,0 +1,17 @@
+---
+const { years = [], categories = [] } = Astro.props;
+---
+
+  <h2>年別一覧</h2>
+  <ul>
+    {years.map((year) => (
+      <li><a href={`/news/${year}/`}>{year}年</a></li>
+    ))}
+  </ul>
+
+  <h2>カテゴリ一覧</h2>
+  <ul>
+    {categories.map((cat) => (
+      <li><a href={`/news/${cat.categoryId}/`}>{cat.name}</a></li>
+    ))}
+  </ul>

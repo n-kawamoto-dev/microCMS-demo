@@ -1,0 +1,22 @@
+.news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .news-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .news-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  a.news-link {
+    &:hover {
+        text-decoration: underline;
+    }
+  }

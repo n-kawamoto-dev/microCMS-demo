@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsList from "../../components/NewsList.astro";
+import NewsNavigation from "../../components/NewsNavigation.astro";
+import { getNewsList, getCategories } from "../../api/microcms";
+
+const { contents } = await getNewsList();
+const { contents: categories } = await getCategories();
+
+const years = Array.from(
+  new Set(contents.map((item) => item.publishedAt?.substring(0, 4)).filter(Boolean))
+).sort((a, b) => b.localeCompare(a));
+---
+
+<BaseLayout>
+  <style slot="head" global>
+    @import "@/styles/news.css";
+  </style>
+  <h1>お知らせ一覧</h1>
+  <NewsList items={contents} />
+  <NewsNavigation years={years} categories={categories} />
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsList from "../../components/NewsList.astro";
+import NewsNavigation from "../../components/NewsNavigation.astro";
+import { getCategories, getNewsByCategory, getNewsList } from "../../api/microcms";
+
+export async function getStaticPaths() {
+  const { contents } = await getCategories();
+
+  return contents
+    .filter(cat => typeof cat.categoryId === "string" && cat.categoryId.length > 0)
+    .map((cat) => ({
+      params: { categoryId: cat.categoryId },
+      props: { categoryId: cat.categoryId, categoryName: cat.name || "不明カテゴリ" },
+    }));
+}
+
+const { categoryId, categoryName } = Astro.props;
+const { contents } = await getNewsByCategory(categoryId);
+
+const { contents: allNews } = await getNewsList();
+const { contents: categories } = await getCategories();
+
+const years = Array.from(
+  new Set(allNews.map((item) => item.publishedAt?.substring(0, 4)).filter(Boolean))
+).sort((a, b) => b.localeCompare(a));
+---
+
+<BaseLayout>
+  <style slot="head" global>
+    @import "@/styles/news.css";
+  </style>
+  <h1>{`「${categoryName}」カテゴリのお知らせ一覧`}</h1>
+  <NewsList items={contents} />
+  <NewsNavigation years={years} categories={categories} />
+</BaseLayout>
