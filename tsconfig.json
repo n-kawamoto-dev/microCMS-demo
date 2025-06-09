@@ -10,5 +10,8 @@
     "moduleResolution": "bundler",
     "target": "esnext"
   },
-  "exclude": ["postcss.config.js"]
+  "exclude": [
+    "tailwind.config.js",
+    "astro.config.mjs"
+  ]
 }
